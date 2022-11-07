@@ -3,10 +3,11 @@ package com.company.instaapi.service;
 import com.company.instaapi.domain.user.User;
 import com.company.instaapi.domain.user.UserAuthInfo;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 public interface UserService {
-    User saveUser(User user);
-    Optional<User> findUserByUsername(String username);
-    Optional<User> findUserByAuthInfo(UserAuthInfo userAuthInfo);
+    User saveUser(@NotNull User user);
+    Optional<User> findUserByUsername(@NotNull String username);
+    Optional<User> findUserByAuthInfo(@NotNull UserAuthInfo userAuthInfo);
 }

@@ -14,6 +14,10 @@ import java.util.List;
 public class User {
 
     @Id
+    private Long id;
+
+    @MapsId
+    @JoinColumn(name = "id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserAuthInfo authInfo;
 
@@ -29,7 +33,7 @@ public class User {
     @NotBlank
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
 
 }

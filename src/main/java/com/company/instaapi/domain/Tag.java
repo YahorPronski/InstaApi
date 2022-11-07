@@ -16,6 +16,6 @@ public class Tag {
     @NotBlank
     private String tag;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
     private Set<Post> posts;
 }

@@ -4,6 +4,8 @@ import com.company.instaapi.domain.user.User;
 import com.company.instaapi.service.UserService;
 import com.company.instaapi.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,11 +21,16 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
     private static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final UserService userService;
+
+    @Lazy
+    @Autowired
+    public JwtFilter(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
