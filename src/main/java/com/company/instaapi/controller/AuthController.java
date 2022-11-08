@@ -18,6 +18,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public String login(@RequestBody @Valid UserAuthInfo userAuthInfo,
@@ -27,7 +28,7 @@ public class AuthController {
         }
 
         return userService.findUserByAuthInfo(userAuthInfo)
-                .map(user -> JwtUtil.generateToken(user.getId()))
+                .map(user -> jwtUtil.generateToken(user.getId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password"));
     }
 

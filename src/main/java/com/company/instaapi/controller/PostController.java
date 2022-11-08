@@ -25,9 +25,9 @@ public class PostController {
         return postService.getPostsByUserId(userId);
     }
 
-    @GetMapping("/{id}")
-    public Post getPostById(@PathVariable String id) {
-        return postService.getPostById(id).orElse(null);
+    @GetMapping("/{postId}")
+    public Post getPostById(@PathVariable String postId) {
+        return postService.getPostById(postId).orElse(null);
     }
 
     @PostMapping
@@ -52,9 +52,9 @@ public class PostController {
 
     }
 
-    @DeleteMapping("/{id}")
-    public HttpStatus deletePostById(@PathVariable String id, Authentication authentication) {
-        Optional<Post> postOpt = postService.getPostById(id);
+    @DeleteMapping("/{postId}")
+    public HttpStatus deletePostById(@PathVariable String postId, Authentication authentication) {
+        Optional<Post> postOpt = postService.getPostById(postId);
         if (!postOpt.isPresent()) {
             return HttpStatus.NOT_FOUND;
         }
@@ -64,11 +64,11 @@ public class PostController {
             return HttpStatus.UNAUTHORIZED;
         }
 
-        postService.deletePostById(id);
+        postService.deletePostById(postId);
         return HttpStatus.OK;
     }
 
-    private Long getUserId(Authentication authentication) {
+    private String getUserId(Authentication authentication) {
         return ((User) authentication.getPrincipal()).getId();
     }
 

@@ -3,7 +3,6 @@ package com.company.instaapi.filter;
 import com.company.instaapi.domain.user.User;
 import com.company.instaapi.service.UserService;
 import com.company.instaapi.util.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,21 +24,23 @@ public class JwtFilter extends GenericFilterBean {
     private static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @Lazy
     @Autowired
-    public JwtFilter(UserService userService) {
+    public JwtFilter(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String authHeader = ((HttpServletRequest) servletRequest).getHeader(AUTHORIZATION_HEADER);
-        String jwtToken = JwtUtil.getTokenFromAuthHeader(authHeader);
+        String jwtToken = jwtUtil.getTokenFromAuthHeader(authHeader);
+        String userId = jwtUtil.getUserIdFromToken(jwtToken);
 
-        if (JwtUtil.validateToken(jwtToken)) {
-            String userId = JwtUtil.getUserIdFromToken(jwtToken);
-            Optional<User> userOpt = userService.findUserById(Long.parseLong(userId));
+        if (userId != null) {
+            Optional<User> userOpt = userService.findUserById(userId);
 
             if (userOpt.isPresent()) {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userOpt.get(), null, Collections.emptyList());

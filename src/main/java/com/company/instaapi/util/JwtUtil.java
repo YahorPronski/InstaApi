@@ -3,44 +3,56 @@ package com.company.instaapi.util;
 import io.jsonwebtoken.*;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 
-@UtilityClass
+@Component
 public class JwtUtil {
     private static final String BEARER_TOKEN_PREFIX = "Bearer ";
-    private static final String JWT_SECRET = "myJwtSecret";
 
-    public static String generateToken(Long userId) {
-        Date expirationDate = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    @Value("${jwt.expiration.minutes}")
+    private Integer jwtExpirationMinutes;
+
+    public String generateToken(@NotNull String userId) {
+        Calendar expirationTime = Calendar.getInstance();
+        expirationTime.add(Calendar.MINUTE, jwtExpirationMinutes);
+
         return Jwts.builder()
-                .setSubject(userId.toString())
-                .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+                .setSubject(userId)
+                .setExpiration(expirationTime.getTime())
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    public static boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
-            return true;
-        } catch (JwtException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    public static String getTokenFromAuthHeader(String header) {
+    public String getTokenFromAuthHeader(String header) {
         if (StringUtils.isNotBlank(header) && header.startsWith(BEARER_TOKEN_PREFIX)) {
             return header.substring(BEARER_TOKEN_PREFIX.length());
         }
         return null;
     }
 
-    public static String getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody();
-        return claims.getSubject();
+    public String getUserIdFromToken(String token) {
+        if (StringUtils.isNotBlank(token)) {
+            Claims claims = getTokenClaims(token);
+            if (claims != null) {
+                return claims.getSubject();
+            }
+        }
+        return null;
+    }
+
+    private Claims getTokenClaims(@NotNull String token) {
+        try {
+            return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        } catch (JwtException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

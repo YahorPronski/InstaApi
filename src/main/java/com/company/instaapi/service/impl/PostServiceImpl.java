@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +22,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Optional<Post> getPostById(@NotNull String id) {
-        return postRepository.findById(UUID.fromString(id));
+    public Optional<Post> getPostById(@NotNull String postId) {
+        return postRepository.findById(postId);
     }
 
     @Override
-    public void deletePostById(@NotNull String id) {
-        postRepository.deleteById(UUID.fromString(id));
+    public void deletePostById(@NotNull String postId) {
+        postRepository.deleteById(postId);
     }
 
     @Override

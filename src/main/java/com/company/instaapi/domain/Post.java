@@ -15,8 +15,7 @@ import java.util.UUID;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String id = UUID.randomUUID().toString();;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "creation_date")

@@ -4,14 +4,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 @Entity
 @Data
 public class UserAuthInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id = UUID.randomUUID().toString();
 
     @NotBlank
     private String username;

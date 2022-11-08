@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PostService {
     Post savePost(@NotNull Post post);
-    Optional<Post> getPostById(@NotNull String id);
-    void deletePostById(@NotNull String id);
+    Optional<Post> getPostById(@NotNull String postId);
+    void deletePostById(@NotNull String postId);
     List<Post> getPostsByUserId(@NotNull String userId);
 }
