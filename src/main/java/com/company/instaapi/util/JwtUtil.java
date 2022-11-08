@@ -13,10 +13,10 @@ public class JwtUtil {
     private static final String BEARER_TOKEN_PREFIX = "Bearer ";
     private static final String JWT_SECRET = "myJwtSecret";
 
-    public static String generateToken(String username) {
+    public static String generateToken(Long userId) {
         Date expirationDate = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userId.toString())
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
@@ -39,7 +39,7 @@ public class JwtUtil {
         return null;
     }
 
-    public static String getUsernameFromToken(String token) {
+    public static String getUserIdFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }

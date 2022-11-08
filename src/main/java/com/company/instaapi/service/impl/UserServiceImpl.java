@@ -24,14 +24,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findUserByUsername(@NotNull String username) {
-        return Optional.of(userRepository.findUserByUsername(username));
+    @Override
+    public Optional<User> findUserById(@NotNull Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
+    public Optional<User> findUserById(@NotNull String userId) {
+        try {
+            return userRepository.findById(Long.parseLong(userId));
+        } catch (NumberFormatException e) {
+            System.out.printf("Cannot parse userId = %s into long", userId);
+        }
+        return Optional.empty();
     }
 
     public Optional<User> findUserByAuthInfo(@NotNull UserAuthInfo userAuthInfo) {
-        User user = userRepository.findUserByUsername(userAuthInfo.getUsername());
-        if (user != null && passwordEncoder.matches(userAuthInfo.getPassword(), user.getAuthInfo().getPassword())) {
-            return Optional.of(user);
+        Optional<User> userOpt = userRepository.findById(userAuthInfo.getId());
+        if (userOpt.isPresent() && passwordEncoder.matches(userAuthInfo.getPassword(), userOpt.get().getAuthInfo().getPassword())) {
+            return userOpt;
         }
         return Optional.empty();
     }

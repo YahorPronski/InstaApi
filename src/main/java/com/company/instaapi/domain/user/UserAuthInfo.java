@@ -19,6 +19,6 @@ public class UserAuthInfo {
     @NotBlank
     private String password;
 
-    @OneToOne(mappedBy = "auth_info")
+    @OneToOne(mappedBy = "authInfo")
     private User user;
 }

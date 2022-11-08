@@ -38,8 +38,8 @@ public class JwtFilter extends GenericFilterBean {
         String jwtToken = JwtUtil.getTokenFromAuthHeader(authHeader);
 
         if (JwtUtil.validateToken(jwtToken)) {
-            String username = JwtUtil.getUsernameFromToken(jwtToken);
-            Optional<User> userOpt = userService.findUserByUsername(username);
+            String userId = JwtUtil.getUserIdFromToken(jwtToken);
+            Optional<User> userOpt = userService.findUserById(Long.parseLong(userId));
 
             if (userOpt.isPresent()) {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userOpt.get(), null, Collections.emptyList());

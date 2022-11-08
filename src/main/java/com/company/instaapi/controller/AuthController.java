@@ -23,11 +23,11 @@ public class AuthController {
     public String login(@RequestBody @Valid UserAuthInfo userAuthInfo,
                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not all required fields are filled");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request body");
         }
 
         return userService.findUserByAuthInfo(userAuthInfo)
-                .map(user -> JwtUtil.generateToken(user.getAuthInfo().getUsername()))
+                .map(user -> JwtUtil.generateToken(user.getId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password"));
     }
 
