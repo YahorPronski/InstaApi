@@ -1,5 +1,5 @@
 # InstaApp
-Web app for posting photos (like Instagram)
+Web app for posting photos (like Instagram)  
 
-Frontend: React
-Backend: Springboot
+Frontend: React  
+Backend: Springboot  
