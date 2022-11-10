@@ -2,4 +2,4 @@
 Web app for posting photos (like Instagram)  
 
 Frontend: React  
-Backend: Springboot  
+Backend: Spring Boot  
