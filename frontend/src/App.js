@@ -1,11 +1,10 @@
 import React from 'react';
-import LoginForm from './components/auth/LoginForm';
+import LoginPage from "./pages/LoginPage";
 
 function App() {
     return (
         <div>
-            <LoginForm name="Yahorio"/>
-            <h1>SUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</h1>
+            <LoginPage/>
         </div>
     );
 }
