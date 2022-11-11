@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../assets/styles/components/forms/loginform.scss';
+import '../../assets/styles/components/forms/entry.scss';
 
-function LoginForm(props) {
+function RegisterForm(props) {
     return (
-        <form className="login-form">
+        <form className="entry-form">
             <label>Username
                 <input type="text" name="usename"/>
             </label>
@@ -15,4 +15,4 @@ function LoginForm(props) {
     );
 }
 
-export default LoginForm;
+export default RegisterForm;
