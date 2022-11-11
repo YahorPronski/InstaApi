@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/styles/components/auth/loginform.scss';
+import '../../assets/styles/components/forms/loginform.scss';
 
 function LoginForm(props) {
     return (
