@@ -4,14 +4,23 @@
 * {
     margin: 0;
     padding: 0;
+}
+
+html {
     height: 100%;
+}
+
+body {
+    height: 100%;
+    font-family: $font-family-primary;
+    background-color: $color-background-secondary;
 }
 
 input, select, textarea, button {
     font-family: inherit;
+    font-size: inherit;
 }
 
-body {
-    font-family: $font-family-primary;
-    background-color: $color-background-secondary;
+#root {
+    height: 100%;
 }

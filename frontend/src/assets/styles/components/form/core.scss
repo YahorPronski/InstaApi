@@ -1,0 +1,8 @@
+.required {
+    display: inline;
+}
+
+.required:after {
+    content: ' *';
+    color: red;
+}
