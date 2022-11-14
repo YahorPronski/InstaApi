@@ -1,7 +1,7 @@
 import React from 'react';
-import '../../assets/styles/components/forms/entry.scss';
+import '../../assets/styles/components/form/entry.scss';
 
-function RegisterForm(props) {
+function LoginForm() {
     return (
         <form className="entry-form">
             <label>Username
@@ -15,4 +15,4 @@ function RegisterForm(props) {
     );
 }
 
-export default RegisterForm;
+export default LoginForm;
