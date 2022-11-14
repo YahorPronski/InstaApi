@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.company</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>insta-app</artifactId>
+	<version>1.0.0</version>
 	<name>InstaApi</name>
 	<description>Api for instagram app</description>
 
