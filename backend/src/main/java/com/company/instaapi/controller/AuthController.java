@@ -21,24 +21,14 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid UserAuthInfo userAuthInfo,
-                        BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request body");
-        }
-
+    public String login(@RequestBody @Valid UserAuthInfo userAuthInfo) {
         return userService.findUserByAuthInfo(userAuthInfo)
                 .map(user -> jwtUtil.generateToken(user.getId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password"));
     }
 
     @PostMapping("/register")
-    public HttpStatus register(@RequestBody @Valid User user,
-                               BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return HttpStatus.BAD_REQUEST;
-        }
-
+    public HttpStatus register(@RequestBody @Valid User user) {
         userService.saveUser(user);
         return HttpStatus.OK;
     }
