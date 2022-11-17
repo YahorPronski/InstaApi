@@ -3,7 +3,6 @@ import Teaser, { ImageSizes as TeaserImageSizes, Directions as TeaserDirections 
 import LoginForm from "../components/forms/LoginForm";
 import TextBlock from "../components/core/TextBlock";
 import '../assets/styles/pages/login.scss';
-import '../assets/styles/core/link.scss';
 import logo from '../assets/images/logo.png';
 
 function LoginPage() {
@@ -18,7 +17,7 @@ function LoginPage() {
             </Teaser>
             <LoginForm/>
             <TextBlock>
-                New to InstaApp? <Link className="regular-link" to="/register">Create an account.</Link>
+                New to InstaApp? <Link to="/register">Create an account.</Link>
             </TextBlock>
         </div>
     );

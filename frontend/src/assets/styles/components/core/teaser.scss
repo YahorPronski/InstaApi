@@ -1,13 +1,20 @@
 .teaser {
     max-width: 100%;
 
+    &--row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     .teaser__image {
         display: block;
         width: 5rem;
         height: 5rem;
         margin: auto;
 
-        &.teaser__image--large {
+        &--large {
             width: 7rem;
             height: 7rem;
         }

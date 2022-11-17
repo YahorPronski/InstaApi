@@ -1,5 +1,4 @@
 import '../../assets/styles/components/core/teaser.scss';
-import '../../assets/styles/core/flex.scss';
 
 export const ImageSizes = {
     DEFAULT: 0,
@@ -19,20 +18,20 @@ const imgSizeStyleMap = {
 };
 
 const dirStyleMap = {
-    [Directions.ROW]: "flex flex-row justify-content-between align-items-center",
+    [Directions.ROW]: "teaser--row",
     [Directions.COLUMN]: "",
 };
 
 function Teaser(props) {
-    const flexClasses = dirStyleMap[props.dir ? props.dir : Directions.ROW];
-    const wrapperClasses = `teaser ${flexClasses}`;
+    const dirCss = dirStyleMap[props.dir ? props.dir : Directions.ROW];
+    const wrapperCss = `teaser ${dirCss}`;
 
-    const imageSizeClasses = imgSizeStyleMap[props.imgSize ? props.imgSize : ImageSizes.DEFAULT];
-    const imageClasses = `teaser__image ${imageSizeClasses}`;
+    const imgSizeCss = imgSizeStyleMap[props.imgSize ? props.imgSize : ImageSizes.DEFAULT];
+    const imgCss = `teaser__image ${imgSizeCss}`;
 
     return (
-        <div className={wrapperClasses}>
-            <img className={imageClasses} src={props.imgSrc} alt={props.imgAlt} />
+        <div className={wrapperCss}>
+            <img className={imgCss} src={props.imgSrc} alt={props.imgAlt} />
             <div className="teaser__text">{props.children}</div>
         </div>
     );

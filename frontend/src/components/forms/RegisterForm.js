@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import TextBlock, { Types as TextBlockTypes } from "../core/TextBlock";
-import '../../assets/styles/core/flex.scss';
 import '../../assets/styles/components/form/core.scss';
 import '../../assets/styles/components/form/entry.scss';
 
@@ -44,7 +43,7 @@ function RegisterForm() {
     return (
         <div>
             <form onSubmit={onSubmit} className="entry-form">
-                <div className="flex flex-row justify-content-between align-items-center">
+                <div className="fields-row">
                     <div>
                         <label>First Name</label>
                         <input
