@@ -1,10 +1,14 @@
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import TextBlock, { Types as TextBlockTypes } from "../core/TextBlock";
+import { useNavigate } from "react-router-dom";
+import API from '../../api';
+import TextBlock, { Type as TextBlockType } from "../core/TextBlock";
 import '../../assets/styles/components/form/core.scss';
 import '../../assets/styles/components/form/entry.scss';
 
 function RegisterForm() {
+    const navigate = useNavigate();
+
     const [firstName, setFirstName] = useState('');
     const [secondName, setSecondName] = useState('');
     const [email, setEmail] = useState('');
@@ -29,20 +33,44 @@ function RegisterForm() {
         return null;
     }
 
-    function onSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
+        setErrorMessage("");
+
         const error = validateForm();
-        if (!error) {
-            alert('form is valid');
-        } else {
-            flushSync(() => setErrorMessage(error));
-            errorMessageRef.current.scrollIntoView();
+        if (error) {
+            showErrorMessage(error);
+            return;
         }
+
+        const user = {
+            firstName: firstName,
+            secondName: secondName,
+            email: email,
+            username: username,
+            password: password,
+        };
+
+        API.post('auth/register', user)
+        .then(() => navigate("/login", {state : {registerSuccess: true}}))
+            .catch((error) => {
+                if (error.response?.status === 409) {
+                    showErrorMessage("Username already exists");
+                } else {
+                    navigate("/login", {state : {registerSuccess: true}})
+                    showErrorMessage("Unexpected error, try again later");
+                }
+            });
+    }
+
+    function showErrorMessage(message) {
+        flushSync(() => setErrorMessage(message));
+        errorMessageRef.current.scrollIntoView();
     }
 
     return (
         <div>
-            <form onSubmit={onSubmit} className="entry-form">
+            <form onSubmit={handleSubmit} className="entry-form">
                 <div className="fields-row">
                     <div>
                         <label>First Name</label>
@@ -92,7 +120,7 @@ function RegisterForm() {
             </form>
 
             <div ref={errorMessageRef}>
-                {errorMessage && <TextBlock type={TextBlockTypes.ERROR}>{errorMessage}</TextBlock>}
+                {errorMessage && <TextBlock type={TextBlockType.ERROR}>{errorMessage}</TextBlock>}
             </div>
         </div>
     );
