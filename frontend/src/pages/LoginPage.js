@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Teaser, { ImageSizes as TeaserImageSizes, Directions as TeaserDirections } from "../components/core/Teaser";
+import Teaser, { ImageSize as TeaserImageSize, Direction as TeaserDirection } from "../components/core/Teaser";
 import LoginForm from "../components/forms/LoginForm";
 import TextBlock from "../components/core/TextBlock";
 import '../assets/styles/pages/login.scss';
@@ -9,8 +9,8 @@ function LoginPage() {
     return (
         <div className="login-page">
             <Teaser
-                dir={TeaserDirections.COLUMN}
-                imgSize={TeaserImageSizes.LARGE}
+                dir={TeaserDirection.COLUMN}
+                imgSize={TeaserImageSize.LARGE}
                 imgSrc={logo}
                 imgAlt="logo">
                 Sign in to InstaApp

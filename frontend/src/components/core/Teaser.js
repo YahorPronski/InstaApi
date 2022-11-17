@@ -1,32 +1,32 @@
 import '../../assets/styles/components/core/teaser.scss';
 
-export const ImageSizes = {
+export const ImageSize = {
     DEFAULT: 0,
     SMALL: 1,
     LARGE: 2,
 };
 
-export const Directions = {
+export const Direction = {
     ROW: 0,
     COLUMN: 1,
 };
 
 const imgSizeStyleMap = {
-    [ImageSizes.DEFAULT]: "",
-    [ImageSizes.SMALL]: "teaser__image--small",
-    [ImageSizes.LARGE]: "teaser__image--large",
+    [ImageSize.DEFAULT]: "",
+    [ImageSize.SMALL]: "teaser__image--small",
+    [ImageSize.LARGE]: "teaser__image--large",
 };
 
 const dirStyleMap = {
-    [Directions.ROW]: "teaser--row",
-    [Directions.COLUMN]: "",
+    [Direction.ROW]: "teaser--row",
+    [Direction.COLUMN]: "",
 };
 
 function Teaser(props) {
-    const dirCss = dirStyleMap[props.dir ? props.dir : Directions.ROW];
+    const dirCss = dirStyleMap[props.dir ? props.dir : Direction.ROW];
     const wrapperCss = `teaser ${dirCss}`;
 
-    const imgSizeCss = imgSizeStyleMap[props.imgSize ? props.imgSize : ImageSizes.DEFAULT];
+    const imgSizeCss = imgSizeStyleMap[props.imgSize ? props.imgSize : ImageSize.DEFAULT];
     const imgCss = `teaser__image ${imgSizeCss}`;
 
     return (

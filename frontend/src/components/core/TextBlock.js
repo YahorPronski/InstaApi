@@ -1,19 +1,19 @@
 import '../../assets/styles/components/core/textblock.scss';
 
-export const Types = {
+export const Type = {
     DEFAULT: 0,
     SUCCESS: 1,
     ERROR: 2,
 };
 
 const typeStyleMape = {
-    [Types.DEFAULT]: "text-block-default",
-    [Types.SUCCESS]: "text-block-success",
-    [Types.ERROR]: "text-block-error",
+    [Type.DEFAULT]: "text-block-default",
+    [Type.SUCCESS]: "text-block-success",
+    [Type.ERROR]: "text-block-error",
 };
 
 function TextBlock(props) {
-    const wrapperClass = typeStyleMape[props.type ? props.type : Types.DEFAULT];
+    const wrapperClass = typeStyleMape[props.type ? props.type : Type.DEFAULT];
 
     return <div className={wrapperClass}>{props.children}</div>;
 }
