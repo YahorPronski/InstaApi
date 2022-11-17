@@ -5,8 +5,8 @@ import com.company.instaapi.domain.user.User;
 import com.company.instaapi.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,16 +31,9 @@ public class PostController {
     }
 
     @PostMapping
-    public HttpStatus savePost(@RequestBody @Valid Post post,
-                               BindingResult bindingResult,
-                               Authentication authentication) {
-
+    public ResponseEntity<String> savePost(@RequestBody @Valid Post post, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            return HttpStatus.UNAUTHORIZED;
-        }
-
-        if (bindingResult.hasErrors()) {
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>("User is not authorized", HttpStatus.UNAUTHORIZED);
         }
 
         User postOwner = new User();
@@ -48,24 +41,26 @@ public class PostController {
         post.setUser(postOwner);
 
         postService.savePost(post);
-        return HttpStatus.OK;
-
+        return new ResponseEntity<>("Post successfully saved", HttpStatus.OK);
     }
 
     @DeleteMapping("/{postId}")
-    public HttpStatus deletePostById(@PathVariable String postId, Authentication authentication) {
+    public ResponseEntity<String> deletePostById(@PathVariable String postId, Authentication authentication) {
         Optional<Post> postOpt = postService.getPostById(postId);
         if (!postOpt.isPresent()) {
-            return HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>("Post wasn't found by the id=" + postId, HttpStatus.NOT_FOUND);
         }
 
-        if (authentication == null || !authentication.isAuthenticated() ||
-                !postOpt.get().getUser().getId().equals(getUserId(authentication))) {
-            return HttpStatus.UNAUTHORIZED;
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return new ResponseEntity<>("User is not authorized", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!postOpt.get().getUser().getId().equals(getUserId(authentication))) {
+            return new ResponseEntity<>("User cannot delete other people's posts", HttpStatus.FORBIDDEN);
         }
 
         postService.deletePostById(postId);
-        return HttpStatus.OK;
+        return new ResponseEntity<>("Post successfully deleted", HttpStatus.OK);
     }
 
     private String getUserId(Authentication authentication) {

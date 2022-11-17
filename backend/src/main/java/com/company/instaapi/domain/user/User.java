@@ -4,8 +4,10 @@ import com.company.instaapi.domain.Post;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,20 +20,19 @@ public class User {
     private String id;
 
     @MapsId
-    @JoinColumn(name = "id")
+    @Valid
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserAuthInfo authInfo;
 
-    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
     @Email
-    @NotBlank
+    @NotEmpty
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
