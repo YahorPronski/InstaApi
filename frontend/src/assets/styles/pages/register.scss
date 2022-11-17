@@ -1,0 +1,11 @@
+@import '../core/default.scss';
+
+.register-page {
+    max-width: 26rem;
+    height: 100%;
+    margin: 0 auto;
+
+    .header {
+        max-height: 10rem;
+    }
+}

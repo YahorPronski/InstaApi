@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import TextBlock, { ERROR } from "../core/TextBlock";
+import TextBlock, { Types as TextBlockTypes } from "../core/TextBlock";
 import '../../assets/styles/core/flex.scss';
 import '../../assets/styles/components/form/core.scss';
 import '../../assets/styles/components/form/entry.scss';
@@ -61,7 +61,7 @@ function RegisterForm() {
                     </div>
                 </div>
 
-                <label>Email</label>
+                <label className="required">Email</label>
                 <input
                     type="text"
                     value={email}
@@ -93,9 +93,7 @@ function RegisterForm() {
             </form>
 
             <div ref={errorMessageRef}>
-                {errorMessage &&
-                    <TextBlock type={ERROR}>{errorMessage}</TextBlock>
-                }
+                {errorMessage && <TextBlock type={TextBlockTypes.ERROR}>{errorMessage}</TextBlock>}
             </div>
         </div>
     );

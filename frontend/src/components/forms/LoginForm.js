@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../assets/styles/components/form/entry.scss';
 
 function LoginForm() {

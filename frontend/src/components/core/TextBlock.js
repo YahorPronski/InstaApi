@@ -1,21 +1,21 @@
-import React from 'react';
-import '../../assets/styles/components/form/entry.scss';
 import '../../assets/styles/components/core/textblock.scss';
 
-export const DEFAULT = 0;
-export const SUCCESS = 1;
-export const ERROR = 2;
+export const Types = {
+    DEFAULT: 0,
+    SUCCESS: 1,
+    ERROR: 2,
+};
 
-const styleMap = {
-    [DEFAULT]: "text-block-default",
-    [SUCCESS]: "text-block-success",
-    [ERROR]: "text-block-error",
+const typeStyleMape = {
+    [Types.DEFAULT]: "text-block-default",
+    [Types.SUCCESS]: "text-block-success",
+    [Types.ERROR]: "text-block-error",
 };
 
 function TextBlock(props) {
-    const style = styleMap[props.type ? props.type : DEFAULT];
+    const wrapperClass = typeStyleMape[props.type ? props.type : Types.DEFAULT];
 
-    return <div className={style}>{props.children}</div>;
+    return <div className={wrapperClass}>{props.children}</div>;
 }
 
 export default TextBlock;
