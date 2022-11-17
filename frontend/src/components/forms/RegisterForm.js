@@ -52,12 +52,11 @@ function RegisterForm() {
         };
 
         API.post('auth/register', user)
-        .then(() => navigate("/login", {state : {registerSuccess: true}}))
+            .then(() => navigate("/login", {state : {registerSuccess: true}}))
             .catch((error) => {
                 if (error.response?.status === 409) {
                     showErrorMessage("Username already exists");
                 } else {
-                    navigate("/login", {state : {registerSuccess: true}})
                     showErrorMessage("Unexpected error, try again later");
                 }
             });
