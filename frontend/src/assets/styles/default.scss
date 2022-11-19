@@ -1,5 +1,5 @@
-@import '../variables/fonts';
-@import '../variables/colors';
+@import './variables/fonts';
+@import './variables/colors';
 
 * {
     margin: 0;
@@ -16,11 +16,17 @@ body {
     background-color: $color-background-secondary;
 }
 
+#root {
+    height: 100%;
+}
+
 input, select, textarea, button {
     font-family: inherit;
     font-size: inherit;
 }
 
-#root {
-    height: 100%;
+a {
+    color: $color-link-primary;
+    text-decoration: none;
 }
+

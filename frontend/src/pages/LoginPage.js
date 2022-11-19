@@ -1,19 +1,23 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import Teaser, { ImageSize as TeaserImageSize, Direction as TeaserDirection } from "../components/core/Teaser";
 import LoginForm from "../components/forms/LoginForm";
 import TextBlock from "../components/core/TextBlock";
-import '../assets/styles/pages/entry.scss';
-import '../assets/styles/core/link.scss';
+import '../assets/styles/pages/login.scss';
 import logo from '../assets/images/logo.png';
 
 function LoginPage() {
     return (
-        <div className="entry-page">
-            <img className="logo" src={logo} alt="logo"/>
-            <h1 className="heading">Sign in to InstaApp</h1>
+        <div className="login-page">
+            <Teaser
+                dir={TeaserDirection.COLUMN}
+                imgSize={TeaserImageSize.LARGE}
+                imgSrc={logo}
+                imgAlt="logo">
+                Sign in to InstaApp
+            </Teaser>
             <LoginForm/>
             <TextBlock>
-                New to InstaApp? <Link className="regular-link" to="/register">Create an account.</Link>
+                New to InstaApp? <Link to="/register">Create an account.</Link>
             </TextBlock>
         </div>
     );
