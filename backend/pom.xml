@@ -17,11 +17,11 @@
 	</parent>
 
 	<modules>
-		<module>post-service</module>
-		<module>user-service</module>
         <module>api-gateway</module>
+		<module>auth-server</module>
 		<module>discovery-server</module>
-        <module>authentication-server</module>
+		<module>user-service</module>
+		<module>post-service</module>
     </modules>
 
 	<properties>

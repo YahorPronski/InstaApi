@@ -1,4 +1,4 @@
-package com.company.userservice.handler.error;
+package com.company.authserver.handler.error;
 
 import lombok.Builder;
 import lombok.Data;

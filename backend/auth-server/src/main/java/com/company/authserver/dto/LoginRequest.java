@@ -1,4 +1,4 @@
-package com.company.authenticationserver.dto;
+package com.company.authserver.dto;
 
 import lombok.Data;
 

@@ -1,9 +1,9 @@
-package com.company.authenticationserver.controller;
+package com.company.authserver.controller;
 
-import com.company.authenticationserver.dto.LoginRequest;
-import com.company.authenticationserver.dto.LoginResponse;
-import com.company.authenticationserver.dto.RegisterRequest;
-import com.company.authenticationserver.service.AuthenticationService;
+import com.company.authserver.dto.LoginRequest;
+import com.company.authserver.dto.LoginResponse;
+import com.company.authserver.dto.RegisterRequest;
+import com.company.authserver.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "/auth")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class AuthController {
 
-    private final AuthenticationService authService;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {

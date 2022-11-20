@@ -1,10 +1,10 @@
-package com.company.authenticationserver.service.impl;
+package com.company.authserver.service.impl;
 
-import com.company.authenticationserver.dto.LoginRequest;
-import com.company.authenticationserver.dto.LoginResponse;
-import com.company.authenticationserver.dto.RegisterRequest;
-import com.company.authenticationserver.service.AuthenticationService;
-import com.company.authenticationserver.util.JwtUtil;
+import com.company.authserver.dto.LoginRequest;
+import com.company.authserver.dto.LoginResponse;
+import com.company.authserver.dto.RegisterRequest;
+import com.company.authserver.service.AuthService;
+import com.company.authserver.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class AuthServiceImpl implements AuthService {
 
     private final WebClient.Builder webClientBuilder;
     private final JwtUtil jwtUtil;

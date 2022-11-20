@@ -1,4 +1,4 @@
-package com.company.authenticationserver.util;
+package com.company.authserver.util;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;

@@ -1,4 +1,4 @@
-package com.company.authenticationserver.util;
+package com.company.authserver.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Calendar;
 
-@Slf4j
 @Component
+@Slf4j
 public class JwtUtil {
 
     private final SecretKey jwtAccessSecret;
