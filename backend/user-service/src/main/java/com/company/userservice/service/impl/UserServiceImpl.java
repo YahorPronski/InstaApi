@@ -4,23 +4,19 @@ import com.company.userservice.model.User;
 import com.company.userservice.repository.UserRepository;
 import com.company.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Override
     public User saveUser(User user) {
-        User savedUser = userRepository.save(user);
-        log.info("User {} was saved", savedUser.getId());
-        return savedUser;
+        return userRepository.save(user);
     }
 
     @Override

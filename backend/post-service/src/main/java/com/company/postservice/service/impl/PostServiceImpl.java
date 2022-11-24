@@ -5,7 +5,6 @@ import com.company.postservice.repository.PostRepository;
 import com.company.postservice.service.PostService;
 import com.company.postservice.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +15,6 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
@@ -27,9 +25,7 @@ public class PostServiceImpl implements PostService {
         String fileName = UUID.randomUUID().toString();
         fileUploadUtil.saveFile("userId", fileName, file);
         post.setImageSrc("userId" + fileName);
-        Post savedPost = postRepository.save(post);
-        log.info("Post {} was saved", savedPost.getId());
-        return savedPost;
+        return postRepository.save(post);
     }
 
     @Override
@@ -40,7 +36,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePostById(@NotNull String postId) {
         postRepository.deleteById(postId);
-        log.info("Post {} was deleted", postId);
     }
 
     @Override
