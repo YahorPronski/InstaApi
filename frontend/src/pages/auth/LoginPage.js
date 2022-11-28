@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import Teaser from "../components/Teaser";
-import LoginForm from "../components/form/LoginForm";
-import Alert from "../components/Alert";
-import '../assets/styles/pages/login.scss';
-import logo from '../assets/images/logo.png';
+import Teaser from "../../components/common/Teaser";
+import LoginForm from "../../components/form/LoginForm";
+import Alert from "../../components/common/Alert";
+import '../../assets/styles/pages/auth/login.scss';
+import logo from '../../assets/images/logo.png';
 
 function LoginPage() {
     return (

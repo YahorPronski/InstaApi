@@ -1,4 +1,4 @@
-import '../assets/styles/components/alert.scss';
+import '../../assets/styles/components/common/alert.scss';
 
 const typeStyleMap = {
     default: "alert-default",

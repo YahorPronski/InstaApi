@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuthContext from "../../context/useAuthContext";
 import API from '../../services/api';
 import { saveTokens } from '../../services/authService';
-import TextInput from "./TextInput";
-import SubmitButton from "./SubmitButton";
-import Alert from "../Alert";
+import TextInput from "./items/TextInput";
+import SubmitButton from "./items/SubmitButton";
+import Alert from "../common/Alert";
 import '../../assets/styles/components/form/entryform.scss';
 
 const LoginForm = () => {

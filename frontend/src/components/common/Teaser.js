@@ -1,4 +1,4 @@
-import '../assets/styles/components/teaser.scss';
+import '../../assets/styles/components/common/teaser.scss';
 
 const imgSizeStyleMap = {
     small: "teaser__image--small",

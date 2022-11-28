@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from "./pages/ProfilePage";
-import Authorized from "./components/auth/Authorized";
-import Unauthorized from "./components/auth/Unauthorized";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import ProfilePage from "./pages/main/ProfilePage";
+import Authorized from "./components/wrap/Authorized";
+import Unauthorized from "./components/wrap/Unauthorized";
 
 function App() {
     return (

@@ -1,7 +1,7 @@
-import Teaser from "../components/Teaser";
-import RegisterForm from "../components/form/RegisterForm";
-import '../assets/styles/pages/register.scss';
-import logo from '../assets/images/logo.png';
+import Teaser from "../../components/common/Teaser";
+import RegisterForm from "../../components/form/RegisterForm";
+import '../../assets/styles/pages/auth/register.scss';
+import logo from '../../assets/images/logo.png';
 
 function RegisterPage() {
     return (
