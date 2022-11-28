@@ -1,18 +1,11 @@
 .teaser {
     max-width: 100%;
 
-    &--row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-
     .teaser__image {
         display: block;
         width: 5rem;
         height: 5rem;
-        margin: auto;
+        margin: 1rem auto;
 
         &--large {
             width: 7rem;
@@ -24,9 +17,24 @@
         display: inline-block;
         width: 100%;
         height: max-content;
-        margin: 1rem auto 1rem auto;
+        margin: 0 auto 1rem auto;
         font-size: 2rem;
         font-weight: normal;
         text-align: center;
+    }
+
+    &--row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .teaser__image {
+            margin: 1.5rem 0;
+        }
+
+        .teaser__text {
+            margin: auto;
+        }
     }
 }

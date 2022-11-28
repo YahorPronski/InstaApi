@@ -6,7 +6,7 @@ import logo from '../../assets/images/logo.png';
 function RegisterPage() {
     return (
         <div className="register-page">
-            <Teaser imgSize="large" imgSrc={logo} imgAlt="logo" row>
+            <Teaser imgSrc={logo} imgAlt="logo" row>
                 Sign up to InstaApp
             </Teaser>
             <RegisterForm/>

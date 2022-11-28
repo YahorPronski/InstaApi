@@ -8,7 +8,7 @@ import logo from '../../assets/images/logo.png';
 function LoginPage() {
     return (
         <div className="login-page">
-            <Teaser imgSize="large" imgSrc={logo} imgAlt="logo">
+            <Teaser imgSrc={logo} imgAlt="logo">
                 Sign in to InstaApp
             </Teaser>
             <LoginForm/>
