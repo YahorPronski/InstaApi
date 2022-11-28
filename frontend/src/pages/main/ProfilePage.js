@@ -1,4 +1,5 @@
 import useAuthContext from "../../context/useAuthContext";
+import UserInfo from "../../components/main/UserInfo";
 import "../../assets/styles/pages/main/profile.scss";
 
 function ProfilePage() {
@@ -6,7 +7,7 @@ function ProfilePage() {
 
     return (
         <div className="profile-page">
-            <h1>Home page</h1>
+            <UserInfo/>
         </div>
     );
 }
