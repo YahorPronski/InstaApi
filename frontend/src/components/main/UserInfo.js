@@ -4,24 +4,26 @@ import logo from '../../assets/images/logo.png';
 const UserInfo = () => {
     return (
         <div className="user-info">
-            <h1 className="user-info__username">username</h1>
 
-            <div className="user-info__main-wrapper">
-                <img className="user-info__avatar" src={logo}/>
+            <img className="user-info__avatar" src={logo}/>
+
+            <h1 className="user-info__fullname">Name Surname</h1>
+            <p className="user-info__username">username</p>
+
+            <div className="user-info__subs-info">
                 <div>
                     <p>152</p>
-                    <p>Posts</p>
+                    <p>posts</p>
                 </div>
                 <div>
                     <p>1044</p>
-                    <p>Followers</p>
+                    <p>followers</p>
                 </div>
                 <div>
                     <p>963</p>
-                    <p>Following</p>
+                    <p>following</p>
                 </div>
             </div>
-
         </div>
     );
 };
