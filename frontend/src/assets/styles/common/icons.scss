@@ -1,0 +1,33 @@
+@import '../variables/fonts.scss';
+
+.icon {
+    font-family: $font-family-icons;
+
+    &.small {
+        font-size: 1rem;
+    }
+
+    &.medium {
+        font-size: 2rem;
+    }
+
+    &.plus:before {
+        content: "\2795";
+    }
+
+    &.heart:before {
+        content: "\2665";
+    }
+
+    &.comment:before {
+        content: "\f075";
+    }
+
+    &.paper-plane:before {
+        content: "\f1D8";
+    }
+
+    &.bookmark:before {
+        content: "\f02e";
+    }
+}

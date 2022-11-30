@@ -1,7 +1,7 @@
 @import '../../variables/colors.scss';
 
 .user-info {
-    overflow: hidden;
+    overflow: auto;
     text-align: center;
 
     .user-info__avatar {

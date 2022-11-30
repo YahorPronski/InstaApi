@@ -8,8 +8,5 @@
     src: url('../../fonts/Icons-Regular.ttf');
 }
 
-$font-family-primary: roboto-regular;
-
-.font-family-icons {
-    font-family: icons-regular, sans-serif;
-}
+$font-family-primary: roboto-regular, sans-serif;
+$font-family-icons: icons-regular, sans-serif;
