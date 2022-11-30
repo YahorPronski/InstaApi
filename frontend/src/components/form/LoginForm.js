@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuthContext from "../../context/useAuthContext";
 import API from '../../services/api';
 import { saveTokens } from '../../services/authService';
-import TextInput from "./items/TextInput";
-import SubmitButton from "./items/SubmitButton";
+import TextInput from "./fields/TextInput";
+import SubmitButton from "./fields/SubmitButton";
 import Alert from "../common/Alert";
 import '../../assets/styles/components/form/entryform.scss';
 

@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import API from '../../services/api';
-import TextInput from "./items/TextInput";
-import SubmitButton from "./items/SubmitButton";
+import TextInput from "./fields/TextInput";
+import SubmitButton from "./fields/SubmitButton";
 import Alert from "../common/Alert";
 import '../../assets/styles/components/form/entryform.scss';
 

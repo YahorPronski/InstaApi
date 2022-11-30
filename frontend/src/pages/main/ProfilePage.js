@@ -10,7 +10,7 @@ function ProfilePage() {
     return (
         <div className="profile-page">
             <UserInfo/>
-            <ButtonLink url="/register">Add post <span className="icon plus small"></span></ButtonLink>
+            <ButtonLink url="/posts/new">Add post <span className="icon plus small"></span></ButtonLink>
             <Post/>
             <Post/>
         </div>
