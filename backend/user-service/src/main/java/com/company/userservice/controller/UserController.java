@@ -2,6 +2,7 @@ package com.company.userservice.controller;
 
 import com.company.userservice.dto.CredentialsDto;
 import com.company.userservice.dto.UserRequest;
+import com.company.userservice.dto.UserResponse;
 import com.company.userservice.model.User;
 import com.company.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,12 @@ public class UserController {
         userService.saveUser(user);
     }
 
-    @GetMapping("/authorized")
-    public String getAuthorizedUserId(@RequestHeader("X-auth-user-id") String userId) {
-        return userId;
+    @GetMapping("/{id}")
+    public UserResponse getUserById(@PathVariable String id) {
+        return userService
+                .getUserById(id)
+                .map(this::mapUserToResponse)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user id"));
     }
 
     @PostMapping("/id")
@@ -46,6 +50,18 @@ public class UserController {
                 .getUserByCredentials(credentialsDto.getUsername(), credentialsDto.getPassword())
                 .map(User::getId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+    }
+
+    private UserResponse mapUserToResponse(User user) {
+        return UserResponse.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .postsCount(user.getPostIds().size())
+                .followersCount(user.getFollowerIds().size())
+                .followingCount(user.getFollowingIds().size())
+                .build();
     }
 
 }

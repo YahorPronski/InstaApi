@@ -4,6 +4,7 @@ import com.company.userservice.model.User;
 import com.company.userservice.repository.UserRepository;
 import com.company.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> getUserById(String userId) {
+        if (!NumberUtils.isParsable(userId)) {
+            return Optional.empty();
+        }
+        return userRepository.findById(Long.parseLong(userId));
     }
 
     @Override
