@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuthContext from "../../context/useAuthContext";
 import API from '../../services/api';
 import { saveTokens } from '../../services/authService';
-import TextInput from "./items/TextInput";
-import SubmitButton from "./items/SubmitButton";
-import Alert from "../Alert";
+import TextInput from "./fields/TextInput";
+import SubmitButton from "./fields/SubmitButton";
+import Alert from "../common/Alert";
 import '../../assets/styles/components/form/entryform.scss';
 
 const LoginForm = () => {
@@ -39,7 +39,7 @@ const LoginForm = () => {
         API.post('auth/login', credentials)
             .then((response) => {
                 saveTokens(response.data);
-                updateAuthContext().then(() => navigate("/home"));
+                updateAuthContext().then(() => navigate("/profile"));
             })
             .catch((error) => {
                 if (error.response?.status === 401) {

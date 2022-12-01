@@ -22,9 +22,9 @@ const getUserByAccessToken = async () => {
         const accessToken = getAuthTokens()?.accessToken;
         if (!accessToken) return;
 
-        return await API.get('users', {
-            params: {
-                token: accessToken
+        return await API.get('users/authorized', {
+            headers: {
+                'Authorization': accessToken
             }
         });
     } catch (error) { }
