@@ -8,10 +8,10 @@ const Post = () => {
             <img className="post__image" src={logo} alt="post"/>
             <div className="post__info">
                 <div className="post__buttons">
-                    <span className="icon heart medium"></span>
-                    <span className="icon comment medium"></span>
-                    <span className="icon paper-plane medium"></span>
-                    <span className="icon bookmark medium"></span>
+                    <span className="icon heart medium cursor-ptr"></span>
+                    <span className="icon comment medium cursor-ptr"></span>
+                    <span className="icon paper-plane medium cursor-ptr"></span>
+                    <span className="icon bookmark medium cursor-ptr"></span>
                 </div>
                 <p className="post__likes">2,867 likes</p>
                 <p className="post__description"><strong>username </strong>

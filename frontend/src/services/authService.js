@@ -4,31 +4,45 @@ const authTokensName = "authTokens";
 
 export const saveTokens = (data) => {
     localStorage.setItem(authTokensName, JSON.stringify({
-        accessToken: `${data.tokenType} ${data.accessToken}`,
-        refreshToken: `${data.tokenType} ${data.refreshToken}`,
+        tokenType: data.tokenType,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
     }));
 };
 
-export const getAuthorizedUser = async () => {
-    const user = await getUserByAccessToken();
-    if (user) return user;
+export const removeTokens = () => {
+    localStorage.removeItem(authTokensName);
+};
+
+export const getAuthorizedUserId = async () => {
+    const userId = await getUserIdByAccessToken();
+    if (userId) return userId;
 
     await refreshTokens();
-    return getUserByAccessToken();
+    return getUserIdByAccessToken();
 }
 
-const getUserByAccessToken = async () => {
+const getUserIdByAccessToken = async () => {
     try {
         const accessToken = getAuthTokens()?.accessToken;
         if (!accessToken) return;
 
-        return await API.get('users/authorized', {
-            headers: {
-                'Authorization': accessToken
+        return (await API.get('auth/validateToken', {
+            params: {
+                token: accessToken
             }
-        });
+        })).data;
     } catch (error) { }
 };
+
+export const getAuthHeader = () => {
+    const tokens = getAuthTokens();
+    return {
+        Authorization: `${tokens?.tokenType} ${tokens?.accessToken}`
+    };
+};
+
+
 
 const refreshTokens = async () => {
     try {
