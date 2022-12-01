@@ -7,6 +7,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,20 +24,11 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing authorization information");
-            }
-
-            String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-            String[] authHeaderParts = authHeader.split(" ");
-
-            if (authHeaderParts.length != 2 || !"Bearer".equals(authHeaderParts[0])) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect authorization structure");
-            }
+            String authToken = getAuthToken(exchange.getRequest());
 
             Claims tokenClaims;
             try {
-                tokenClaims = jwtUtil.getAccessTokenClaims(authHeaderParts[1]);
+                tokenClaims = jwtUtil.getAccessTokenClaims(authToken);
             } catch (JwtException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,  e.getMessage());
             }
@@ -47,6 +39,21 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
 
             return chain.filter(exchange);
         };
+    }
+
+    private String getAuthToken(ServerHttpRequest request) {
+        if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing authorization information");
+        }
+
+        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        String[] authHeaderParts = authHeader.split(" ");
+
+        if (authHeaderParts.length != 2 || !"Bearer".equals(authHeaderParts[0])) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect authorization structure");
+        }
+
+        return authHeaderParts[1];
     }
 
     public static class Config {

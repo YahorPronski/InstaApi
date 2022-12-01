@@ -35,6 +35,11 @@ public class UserController {
         userService.saveUser(user);
     }
 
+    @GetMapping("/authorized")
+    public String getAuthorizedUserId(@RequestHeader("X-auth-user-id") String userId) {
+        return userId;
+    }
+
     @PostMapping("/id")
     public Long getUserIdByCredentials(@RequestBody @Valid CredentialsDto credentialsDto) {
         return userService
