@@ -10,6 +10,10 @@ export const saveTokens = (data) => {
     }));
 };
 
+export const removeTokens = () => {
+    localStorage.removeItem(authTokensName);
+};
+
 export const getAuthorizedUserId = async () => {
     const userId = await getUserIdByAccessToken();
     if (userId) return userId;
@@ -23,13 +27,22 @@ const getUserIdByAccessToken = async () => {
         const accessToken = getAuthTokens()?.accessToken;
         if (!accessToken) return;
 
-        return await API.get('auth/validateToken', {
+        return (await API.get('auth/validateToken', {
             params: {
                 token: accessToken
             }
-        });
+        })).data;
     } catch (error) { }
 };
+
+export const getAuthHeader = () => {
+    const tokens = getAuthTokens();
+    return {
+        Authorization: `${tokens?.tokenType} ${tokens?.accessToken}`
+    };
+};
+
+
 
 const refreshTokens = async () => {
     try {

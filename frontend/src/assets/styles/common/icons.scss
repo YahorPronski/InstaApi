@@ -9,6 +9,11 @@
 
     &.medium {
         font-size: 2rem;
+        line-height: 2rem;
+    }
+
+    &.cursor-ptr {
+        cursor: pointer;
     }
 
     &.plus:before {
@@ -29,5 +34,9 @@
 
     &.bookmark:before {
         content: "\f02e";
+    }
+
+    &.logout:before {
+        content: "\f045";
     }
 }
