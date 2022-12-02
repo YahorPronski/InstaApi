@@ -4,25 +4,33 @@ import FileUpload from "./fields/FileUpload";
 import SubmitButton from "./fields/SubmitButton";
 import * as PostService from "../../services/postService";
 import "../../assets/styles/components/form/postform.scss"
-
+import {useNavigate} from "react-router-dom";
 
 const PostForm = () => {
-    const [file, setFile] = useState({});
-    const [description, setDescription] = useState('');
+    const navigate = useNavigate();
+    const [post, setPost] = useState({file: null, description: ''});
 
     const handleSubmit = () => {
-        PostService.savePost({
-            file: file,
-            description: description,
-        });
+        PostService.savePost(post)
+            .then(() => navigate("/profile"));
     };
 
     const handleFileUpload = (event) => {
         const reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
-        reader.onload = function() {
-            setFile(reader.result);
+        reader.onload = () => {
+            setPost(post => ({
+                ...post,
+                file: reader.result,
+            }));
         };
+    };
+
+    const handleTextInput = (event) => {
+        setPost(post => ({
+            ...post,
+            [event.target.name]: event.target.value,
+        }));
     };
 
     return (
@@ -34,8 +42,8 @@ const PostForm = () => {
             <TextArea
                 label="Description"
                 name="description"
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}/>
+                value={post.description}
+                onChange={handleTextInput}/>
             <SubmitButton text="Save" onClick={handleSubmit}/>
         </form>
     );
