@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 
 const PostForm = () => {
     const navigate = useNavigate();
-    const [post, setPost] = useState({file: null, description: ''});
+    const [post, setPost] = useState({fileBase64: null, description: ''});
 
     const handleSubmit = () => {
         PostService.savePost(post)
@@ -21,7 +21,7 @@ const PostForm = () => {
         reader.onload = () => {
             setPost(post => ({
                 ...post,
-                file: reader.result,
+                fileBase64: reader.result,
             }));
         };
     };
