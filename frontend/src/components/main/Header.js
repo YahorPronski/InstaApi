@@ -1,5 +1,5 @@
 import Teaser from "../common/Teaser";
-import {removeTokens} from "../../services/authService";
+import * as AuthService from "../../services/authService";
 import "../../assets/styles/components/main/header.scss";
 import "../../assets/styles/common/icons.scss";
 import logo from "../../assets/images/logo.png"
@@ -9,7 +9,7 @@ const Header = () => {
     const {updateAuthContext} = useAuthContext();
 
     const logout = () => {
-        removeTokens();
+        AuthService.logout();
         updateAuthContext();
     };
 

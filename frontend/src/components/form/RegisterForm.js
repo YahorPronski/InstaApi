@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import API from '../../services/api';
+import * as AuthService from "../../services/authService";
 import TextInput from "./fields/TextInput";
 import SubmitButton from "./fields/SubmitButton";
 import Alert from "../common/Alert";
@@ -29,6 +29,32 @@ const RegisterForm = () => {
         }
     }, [errorMessage]);
 
+    const handleSubmit = () => {
+        setErrorMessage("");
+        if (!validateForm()) return;
+
+        const onSuccess = () => {
+            navigate("/login", {state : {registerSuccess: true}});
+        };
+
+        const onError = (error) => {
+            if (error.response?.status === 409) {
+                setErrorMessage("Username already exists");
+            } else {
+                setErrorMessage("Unexpected error, try again later");
+            }
+        };
+
+        AuthService.register(userInfo, onSuccess, onError);
+    };
+
+    const handleInput = (event) => {
+        setUserInfo(userInfo => ({
+            ...userInfo,
+            [event.target.name]: event.target.value,
+        }));
+    };
+
     const validateForm = () => {
         const isBlank = (str) => !str || !str.trim().length;
         if (isBlank(userInfo.email) || isBlank(userInfo.username) || isBlank(userInfo.password)) {
@@ -44,28 +70,6 @@ const RegisterForm = () => {
             return false;
         }
         return true;
-    }
-
-    const handleSubmit = () => {
-        setErrorMessage("");
-        if (!validateForm()) return;
-
-        API.post('auth/register', userInfo)
-            .then(() => navigate("/login", {state : {registerSuccess: true}}))
-            .catch((error) => {
-                if (error.response?.status === 409) {
-                    setErrorMessage("Username already exists");
-                } else {
-                    setErrorMessage("Unexpected error, try again later");
-                }
-            });
-    }
-
-    const handleInput = (event) => {
-        setUserInfo(userInfo => ({
-            ...userInfo,
-            [event.target.name]: event.target.value,
-        }));
     };
 
     return (

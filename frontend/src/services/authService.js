@@ -1,30 +1,46 @@
 import API from '../services/api';
+import * as TokenService from './tokenService';
 
-const authTokensName = "authTokens";
-
-export const saveTokens = (data) => {
-    localStorage.setItem(authTokensName, JSON.stringify({
-        tokenType: data.tokenType,
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
-    }));
+export const login = (credentials, onSuccess, onError) => {
+    API.post('auth/login', credentials)
+        .then((response) => {
+            TokenService.saveTokens(response.data);
+            onSuccess(response);
+        })
+        .catch(onError);
 };
 
-export const removeTokens = () => {
-    localStorage.removeItem(authTokensName);
+export const logout = () => {
+    TokenService.removeTokens();
+};
+
+export const register = (userData, onSuccess, onError) => {
+    API.post('auth/register', userData)
+        .then(onSuccess)
+        .catch(onError);
 };
 
 export const getAuthorizedUserId = async () => {
     const userId = await getUserIdByAccessToken();
     if (userId) return userId;
 
-    await refreshTokens();
+    await TokenService.refreshTokens();
     return getUserIdByAccessToken();
 }
 
+export const getAuthConfig = () => {
+    const tokens = TokenService.getTokens();
+    if (!tokens) return;
+    return {
+        headers: {
+            Authorization: `${tokens.tokenType} ${tokens.accessToken}`
+        }
+    };
+};
+
 const getUserIdByAccessToken = async () => {
     try {
-        const accessToken = getAuthTokens()?.accessToken;
+        const accessToken = TokenService.getTokens()?.accessToken;
         if (!accessToken) return;
 
         return (await API.get('auth/validateToken', {
@@ -32,35 +48,10 @@ const getUserIdByAccessToken = async () => {
                 token: accessToken
             }
         })).data;
-    } catch (error) { }
-};
-
-export const getAuthHeader = () => {
-    const tokens = getAuthTokens();
-    return {
-        Authorization: `${tokens?.tokenType} ${tokens?.accessToken}`
-    };
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 
-
-const refreshTokens = async () => {
-    try {
-        const refreshToken = getAuthTokens()?.refreshToken;
-        if (!refreshToken) return;
-
-        const response = await API.get('auth/refreshToken', {
-            params: {
-                token: refreshToken
-            }
-        });
-        saveTokens(response.data);
-    } catch (error) { }
-};
-
-const getAuthTokens = () => {
-    const authTokens = localStorage.getItem(authTokensName);
-    if (!authTokens) return;
-    return JSON.parse(authTokens);
-}
 
