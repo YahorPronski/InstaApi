@@ -1,25 +1,30 @@
 package com.company.postservice.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
 
-    @Column(name = "image_src", nullable = false)
-    private String imageSrc;
-
+    @Column(columnDefinition = "text")
     private String description;
 
+    @Builder.Default
     @Temporal(TemporalType.DATE)
     @Column(name = "creation_date")
     private Date creationDate = new Date();
@@ -32,9 +37,9 @@ public class Post {
     private Set<Long> likedUserIds;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Comment> comments = new HashSet<>();
+    private Set<Comment> comments;
 
 }

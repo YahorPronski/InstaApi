@@ -1,5 +1,6 @@
 package com.company.postservice.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder
 public class Tag {
 
     @Id
