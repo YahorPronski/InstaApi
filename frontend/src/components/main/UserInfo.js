@@ -1,5 +1,5 @@
 import "../../assets/styles/components/main/userinfo.scss"
-import logo from '../../assets/images/logo.png';
+import "../../assets/styles/common/icons.scss"
 import * as UserService from "../../services/userService";
 import {useEffect, useState} from "react";
 
@@ -12,7 +12,10 @@ const UserInfo = ({userId}) => {
 
     return (<>{user &&
         <div className="user-info">
-            <img className="user-info__avatar" src={logo}/>
+            <div className="user-info__avatar">
+                {user.avatar ? <img src={user.avatar} alt="avatar"/>
+                             : <span className="icon user extra-large"></span>}
+            </div>
 
             <h1 className="user-info__title">{user.firstName} {user.lastName}</h1>
             <p className="user-info__subtitle">{user.email}</p>
