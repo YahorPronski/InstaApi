@@ -12,6 +12,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -47,21 +49,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Long getUserIdFromToken(String token) {
+    public Optional<Long> getUserIdFromToken(String token) {
         if (jwtUtil.validateAccessToken(token)) {
             String userId = jwtUtil.getAccessTokenClaims(token).getSubject();
-            return Long.parseLong(userId);
+            return Optional.of(Long.parseLong(userId));
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public LoginResponse refreshToken(String token) {
+    public Optional<LoginResponse> refreshToken(String token) {
         if (jwtUtil.validateRefreshToken(token)) {
             String userId = jwtUtil.getRefreshTokenClaims(token).getSubject();
-            return generateTokens(userId);
+            return Optional.of(generateTokens(userId));
         }
-        return null;
+        return Optional.empty();
     }
 
     public LoginResponse generateTokens(String userId) {

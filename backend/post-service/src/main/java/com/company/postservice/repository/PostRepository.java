@@ -9,6 +9,6 @@ import java.util.List;
 public interface PostRepository extends CrudRepository<Post, String> {
 
     @Query("select p from Post p where p.userId = ?1")
-    List<Post> getPostsByUserId(String userId);
+    List<Post> getPostsByUserId(Long userId);
 
 }
