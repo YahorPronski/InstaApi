@@ -10,7 +10,7 @@ function ProfilePage() {
 
 
     return (
-        <div>
+        <>
             {/* use outlet instead */}
             <Header/>
 
@@ -19,7 +19,7 @@ function ProfilePage() {
                 <ButtonLink url="/posts/new">Add post <span className="icon plus small"></span></ButtonLink>
                 <UserPosts userId={userId}/>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -12,6 +12,11 @@
         line-height: 2rem;
     }
 
+    &.extra-large {
+        font-size: 8rem;
+        line-height: 8rem;
+    }
+
     &.cursor-ptr {
         cursor: pointer;
     }
@@ -38,5 +43,9 @@
 
     &.logout:before {
         content: "\f045";
+    }
+
+    &.image:before {
+        content: "\f03e";
     }
 }
