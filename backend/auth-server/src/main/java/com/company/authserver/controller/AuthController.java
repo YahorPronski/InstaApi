@@ -31,20 +31,14 @@ public class AuthController {
 
     @GetMapping("/validateToken")
     public Long validateToken(@RequestParam String token) {
-        Long userId = authService.getUserIdFromToken(token);
-        if (userId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid token");
-        }
-        return userId;
+        return authService.getUserIdFromToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid token"));
     }
 
     @GetMapping("/refreshToken")
     public LoginResponse refreshToken(@RequestParam String token) {
-        LoginResponse response = authService.refreshToken(token);
-        if (response == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid token");
-        }
-        return response;
+        return authService.refreshToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid token"));
     }
 
 }
