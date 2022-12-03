@@ -23,7 +23,7 @@ const UserPosts = ({userId}) => {
         <div className="no-posts">
             <span className="icon image extra-large"></span>
             <br/>
-            <p>There is no posts yet</p>
+            <p>There are no posts yet</p>
         </div>
     );
 
