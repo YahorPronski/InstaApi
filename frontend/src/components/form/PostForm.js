@@ -21,7 +21,7 @@ const PostForm = () => {
         reader.onload = () => {
             setPost(post => ({
                 ...post,
-                fileBase64: reader.result,
+                fileBase64: reader.result.split(',').pop(),
             }));
         };
     };
@@ -37,6 +37,7 @@ const PostForm = () => {
         <form className="post-form">
             <FileUpload
                 label="Image"
+                accept="image/*"
                 onChange={handleFileUpload}
                 required/>
             <TextArea

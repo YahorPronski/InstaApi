@@ -1,6 +1,6 @@
 import '../../../assets/styles/components/form/fields/fileupload.scss';
 
-const FileUpload = ({label, onChange, required}) => {
+const FileUpload = ({label, accept, onChange, required}) => {
     const labelCss = required ? "required" : "";
 
     return (
@@ -9,6 +9,7 @@ const FileUpload = ({label, onChange, required}) => {
             <input
                 className="file-upload"
                 type="file"
+                accept={accept}
                 onChange={onChange}/>
         </div>
     );

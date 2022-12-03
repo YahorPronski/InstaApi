@@ -1,15 +1,13 @@
 import "../../assets/styles/components/main/userinfo.scss"
 import logo from '../../assets/images/logo.png';
-import useAuthContext from "../../context/useAuthContext";
-import {getUserById} from "../../services/userService";
+import * as UserService from "../../services/userService";
 import {useEffect, useState} from "react";
 
-const UserInfo = () => {
-    const {userId} = useAuthContext();
+const UserInfo = ({userId}) => {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        getUserById(userId).then(response => setUser(response.data));
+        UserService.getUserById(userId).then(setUser);
     },[]);
 
     return (<>{user &&

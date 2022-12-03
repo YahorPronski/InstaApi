@@ -1,20 +1,23 @@
 import UserInfo from "../../components/main/UserInfo";
 import ButtonLink from "../../components/common/ButtonLink";
-import Post from "../../components/main/Post";
 import "../../assets/styles/pages/main/profile.scss";
 import Header from "../../components/main/Header";
+import useAuthContext from "../../context/useAuthContext";
+import UserPosts from "../../components/main/UserPosts";
 
 function ProfilePage() {
+    const {userId} = useAuthContext();
+
+
     return (
         <div>
             {/* use outlet instead */}
             <Header/>
 
             <div className="profile-page">
-                <UserInfo/>
+                <UserInfo userId={userId}/>
                 <ButtonLink url="/posts/new">Add post <span className="icon plus small"></span></ButtonLink>
-                <Post/>
-                <Post/>
+                <UserPosts userId={userId}/>
             </div>
         </div>
     );

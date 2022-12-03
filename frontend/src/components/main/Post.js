@@ -1,11 +1,14 @@
 import "../../assets/styles/components/main/post.scss"
 import "../../assets/styles/common/icons.scss"
-import logo from "../../TEST.png"
 
-const Post = () => {
+const Post = ({user, post}) => {
+    const {username} = user;
+    const {fileBase64, description, likes} = post;
+
     return (
         <div className="post">
-            <img className="post__image" src={logo} alt="post"/>
+            <img className="post__image" src={`data:image/jpg;base64,${fileBase64}`} alt="post"/>
+
             <div className="post__info">
                 <div className="post__buttons">
                     <span className="icon heart medium cursor-ptr"></span>
@@ -13,13 +16,13 @@ const Post = () => {
                     <span className="icon paper-plane medium cursor-ptr"></span>
                     <span className="icon bookmark medium cursor-ptr"></span>
                 </div>
-                <p className="post__likes">2,867 likes</p>
-                <p className="post__description"><strong>username </strong>
-                    description description description description description
-                    description description description description description description description
-                    description description description description description description description
-                    description description description description description description description
-                </p>
+
+                <p className="post__likes">{likes} likes</p>
+
+                {description && <p className="post__description">
+                    <strong>{username} </strong>
+                    {description}
+                </p>}
             </div>
         </div>
     );
