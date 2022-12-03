@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -25,7 +28,6 @@ public class Post {
     private String description;
 
     @Builder.Default
-    @Temporal(TemporalType.DATE)
     @Column(name = "creation_date")
     private Date creationDate = new Date();
 
@@ -33,6 +35,7 @@ public class Post {
     private Long userId;
 
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @Column(name = "liked_user_id")
     private Set<Long> likedUserIds;
 

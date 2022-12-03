@@ -7,13 +7,14 @@ import com.company.postservice.model.Tag;
 import com.company.postservice.service.PostService;
 import com.company.postservice.util.FileUtil;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,29 +23,24 @@ import java.util.stream.Collectors;
 public class PostController {
 
     private final PostService postService;
-    private final ModelMapper modelMapper;
     private final FileUtil fileUtil;
-
-    @GetMapping("/{post-id}")
-    public PostResponse getPost(@PathVariable("post-id") String postId) {
-        return postService.getPostById(postId)
-                .map(post -> modelMapper.map(post, PostResponse.class))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void savePost(@RequestBody @Valid PostRequest postRequest,
-                         @RequestHeader("X-auth-user-id") long userId) {
-        byte[] file = fileUtil.convertFromBase64(postRequest.getFileBase64());
+                         @RequestHeader("X-auth-user-id") Long userId) {
+        byte[] file = fileUtil.decodeBase64(postRequest.getFileBase64());
         Post post = mapToPost(postRequest);
         post.setUserId(userId);
         postService.savePost(post, file);
     }
 
-    @DeleteMapping("/{post-id}")
-    public void deletePost(@PathVariable("post-id") String postId) {
-        postService.deletePostById(postId);
+    @GetMapping
+    public List<PostResponse> getUserPosts(@RequestParam String userId) {
+        if (!NumberUtils.isParsable(userId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user id");
+        }
+        return postService.getPostsByUserId(Long.parseLong(userId));
     }
 
     private Post mapToPost(PostRequest postRequest) {
@@ -52,8 +48,8 @@ public class PostController {
                 .description(postRequest.getDescription())
                 .tags(postRequest.getTags() != null ?
                         postRequest.getTags().stream()
-                        .map(tag -> Tag.builder().name(tag).build())
-                        .collect(Collectors.toSet()) : new HashSet<>())
+                                .map(tag -> Tag.builder().name(tag).build())
+                                .collect(Collectors.toSet()) : new HashSet<>())
                 .build();
     }
 

@@ -19,5 +19,5 @@ public class Tag {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
-    private Set<Post> posts = new HashSet<>();
+    private Set<Post> posts;
 }

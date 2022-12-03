@@ -1,7 +1,6 @@
 package com.company.postservice.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +10,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 @Slf4j
 @Component
@@ -38,7 +38,22 @@ public class FileUtil {
         }
     }
 
-    public byte[] convertFromBase64(String fileBase64) {
-        return Base64.decodeBase64(fileBase64);
+    public byte[] readFile(String fileDir) {
+        Path absPath = Paths.get(uploadRootPath + fileDir);
+        try {
+            return Files.readAllBytes(absPath);
+        } catch (IOException e) {
+            log.error("Could not read file {}", absPath, e);
+        }
+        return null;
     }
+
+    public String encodeBase64(byte[] bytes) {
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    public byte[] decodeBase64(String fileBase64) {
+        return Base64.getDecoder().decode(fileBase64);
+    }
+
 }
