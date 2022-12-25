@@ -7,6 +7,7 @@ import com.company.authserver.service.AuthService;
 import com.company.authserver.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,6 +21,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final WebClient.Builder webClientBuilder;
     private final JwtUtil jwtUtil;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public LoginResponse loginUser(LoginRequest loginRequest) {
@@ -46,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, error.getMessage());
                 })
                 .block();
+        kafkaTemplate.send("testTopic", "Hello from auth service");
     }
 
     @Override
