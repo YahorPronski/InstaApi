@@ -3,11 +3,13 @@ package com.company.userservice.controller;
 import com.company.userservice.dto.CredentialsDto;
 import com.company.userservice.dto.UserRequest;
 import com.company.userservice.dto.UserResponse;
+import com.company.userservice.event.UserRegisteredEvent;
 import com.company.userservice.model.User;
 import com.company.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +22,7 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final KafkaTemplate<String, UserRegisteredEvent> kafkaTemplate;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,6 +37,8 @@ public class UserController {
 
         User user = modelMapper.map(userRequest, User.class);
         userService.saveUser(user);
+
+        kafkaTemplate.send("userRegister", modelMapper.map(user, UserRegisteredEvent.class));
     }
 
     @GetMapping("/{id}")
